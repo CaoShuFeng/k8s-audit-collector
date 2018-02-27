@@ -31,8 +31,8 @@ k8s-audit-collector allows tenants to read audits from their own namespace. Requ
 At this step, tenants will be able to read their own audit events saved in step [1.3](#13-output).
 
 ## deployment
-1. k8s-audit-collector needs the same public key passed to `kube-apiserver --service-account-key-file` to validate the serviceaccount token.
-2. k8s-audit-collector can both run inside a pod or run as a stand alone progress.
+1. k8s-audit-collector can both run inside a pod or run as a stand alone progress.
+2. See [INSTALL.md](INSTALL.md) for details about how to deploy k8s-audit-collector
 
 ## alternatives
 1. Use file shareing service(like nfs, ftp) to share the audit events to different users.
