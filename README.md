@@ -11,7 +11,7 @@ Note: Serviceaccount token is designed to be presented to the apiserver in princ
 
 ## Non-Goals
 1. Search, analytics of audit events. Users should implement this themselves, if they want this feature.
-2. RBAC authentication. K8s-audit-collector implements access control according to the namespace of serviceaccount. Access control of specific kubernetes role is not supported.
+2. RBAC authentication. K8s-audit-collector requires remote authorizer to make decision.
 
 
 ## Story about audit events
@@ -26,7 +26,8 @@ Audit events from different namespaces are saved in different directories. And a
 ### 2.1 authentication
 k8s-audit-collector validates serviceaccount token from tenants. Namespace and serviceaccount name are read from the serviceaccount token.
 ### 2.2 authorization
-k8s-audit-collector allows tenants to read audits from their own namespace. Requests from specific namespace(like kube-system) can read all audit events.
+K8s-audit-collector allows tenants to read audits from their own namespace. Requests from specific namespace(like kube-system) can read all audit events.
+Or k8s-audit-collector use remote authorizer to make decision. Whether requests from one service account can read audit events of one namespace? Whether requests from one service account can read cluster scoped audit events?
 ### 2.3 read events
 At this step, tenants will be able to read their own audit events saved in step [1.3](#13-output).
 
@@ -35,6 +36,6 @@ At this step, tenants will be able to read their own audit events saved in step 
 2. See [INSTALL.md](INSTALL.md) for details about how to deploy k8s-audit-collector
 
 ## alternatives
-1. Use file shareing service(like nfs, ftp) to share the audit events to different users.
+1. Use file sharing service(like nfs, ftp) to share the audit events to different users.
 2. Use fluentd/elasticsearch and their authentication/authorization methods.
 3. Save audit events to etcd storage and implement a feature like `kubectl get audits`.
